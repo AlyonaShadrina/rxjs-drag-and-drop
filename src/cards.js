@@ -1,5 +1,6 @@
 import { fromEvent, merge, from } from 'rxjs';
 import { takeUntil, switchMap, withLatestFrom, bufferCount, map, sequenceEqual, mergeMap, filter } from 'rxjs/operators';
+import visualCloneHandlers from './clone';
 
 const draggable = document.querySelectorAll('.draggable');
 const droppable = document.querySelectorAll('.droppable');
@@ -36,17 +37,16 @@ const dragStart$ = merge(mouseDownOnDraggable$, mouseMoveOnDocument$).pipe( // o
 
 dragStart$.pipe(
   withLatestFrom(mouseDownOnDraggable$),
-).subscribe(matched => console.log('create clone ', matched));
+).subscribe(([_, mouseDownEvent]) => {
+  visualCloneHandlers.addCloneToDocument(mouseDownEvent.target.cloneNode(true));
+});
 dragMove$.pipe(
-  withLatestFrom(mouseDownOnDraggable$),
-).subscribe(([moveEvent, mouseDownEvent]) => {
+).subscribe((moveEvent) => {
   window.getSelection().removeAllRanges(); // helps remove bugs when text selected
-  // TODO: create visual clone of draggable element 
-  // const clone = mouseDownEvent.target.cloneNode();
-  console.log('update position:', moveEvent);
+  visualCloneHandlers.updateClonePosition(moveEvent);
 });
 dragMouseUp$.subscribe((mouseUpEvent) => {
-  console.log('clear container:', mouseUpEvent);
+  visualCloneHandlers.removeCloneFromDocument();
 });
 dragDrop$.pipe(
   withLatestFrom(mouseDownOnDraggable$),
