@@ -2,6 +2,8 @@ import { fromEvent, merge, from } from 'rxjs';
 import { takeUntil, switchMap, withLatestFrom, bufferCount, map, sequenceEqual, mergeMap, filter } from 'rxjs/operators';
 import visualCloneHandlers from './clone';
 
+const hoveredClass = 'z-depth-5';
+
 const draggable = document.querySelectorAll('.draggable');
 const droppable = document.querySelectorAll('.droppable');
 
@@ -9,6 +11,7 @@ const mouseDownOnDraggable$ = fromEvent(draggable, 'mousedown');
 const mouseUpOnDocument$ = fromEvent(document, 'mouseup');
 const mouseUpWindow$ = fromEvent(window, 'mouseup');
 const mouseMoveOnDocument$ = fromEvent(document, 'mousemove');
+const mouseMoveOnDroppable$ = fromEvent(droppable, 'mousemove');
 const mouseUpOnDroppable$ = fromEvent(droppable, 'mouseup');
 
 const dragMove$ = mouseDownOnDraggable$.pipe( // on every mousedown
@@ -34,20 +37,34 @@ const dragStart$ = merge(mouseDownOnDraggable$, mouseMoveOnDocument$).pipe( // o
   ),
   filter(bool => bool), // get only 'mousedown' + 'mousemove' events
 );
+const dragMoveOnDroppable$ = dragMove$.pipe( // on every drag move
+  switchMap(() => mouseMoveOnDroppable$.pipe( // catch every mouseup on droppable
+    takeUntil(mouseUpOnDocument$) // until mouseup
+  )),
+);
 
+// create visually draggable clone on dragstart
 dragStart$.pipe(
   withLatestFrom(mouseDownOnDraggable$),
 ).subscribe(([_, mouseDownEvent]) => {
   visualCloneHandlers.addCloneToDocument(mouseDownEvent.target.cloneNode(true));
 });
-dragMove$.pipe(
-).subscribe((moveEvent) => {
+// update position of visually draggable clone on dragmove
+dragMove$.subscribe((moveEvent) => {
   window.getSelection().removeAllRanges(); // helps remove bugs when text selected
   visualCloneHandlers.updateClonePosition(moveEvent);
 });
-dragMouseUp$.subscribe((mouseUpEvent) => {
+// remove visually draggable clone on dragmouseup
+dragMouseUp$.subscribe(() => {
   visualCloneHandlers.removeCloneFromDocument();
+  droppable.forEach(el => el.classList.remove(hoveredClass));
 });
+// highlight potential droppable target on hover drag
+dragMoveOnDroppable$.subscribe((mouseMoveEvent) => {
+  droppable.forEach(el => el.classList.remove(hoveredClass));
+  mouseMoveEvent.target.closest('.droppable').classList.add(hoveredClass);
+});
+// move draggable element to target droppable on drop
 dragDrop$.pipe(
   withLatestFrom(mouseDownOnDraggable$),
 ).subscribe(([dropToElement, draggedElement]) => {
