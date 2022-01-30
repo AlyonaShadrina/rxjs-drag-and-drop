@@ -5,7 +5,6 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <title>RxJS</title>
 </head>
 <body>
@@ -28,7 +27,29 @@
     height: 100%;
     padding: .25rem;
   }
+  .data-container__card {
+    border: 1px solid black;
+    /* for correct work drop it needs to have margin*/
+    margin: 0.5rem 0;
+  }
+  .z-depth-5 {
+    background-color: red;
+  }
 </style>
+
+<div class="row">
+  <div class="input-field col s12 m3">
+    <select name="search-field" id="search-type" style="display: inline;">
+      <option value="title" selected>title</option>
+      <option value="description">description</option>
+      <option value="status">status</option>
+    </select>
+  </div>
+  <div class="input-field col s12 m9">
+    <input type="text" name="search" id="search-input">
+    <label for="search-input">Search</label>
+  </div>
+</div>
 
 <div class="data-container"></div>
 

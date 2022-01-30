@@ -16,7 +16,7 @@ const createColumnElement = (columnTitle) => {
 };
 const createTodoItemElement = (todoItemObject) => {
   const result = document.createElement('div');
-  result.classList.add('card', DOMClasses.draggable);
+  result.classList.add('data-container__card', DOMClasses.draggable);
   result.innerText = todoItemObject.title;
   return result;
 };
@@ -36,9 +36,9 @@ const createColumnsElementsFragment = (sortedByStatusData) => {
     return accumulator;
   }), document.createDocumentFragment())
 };
-const mapDataToDOM = (response) => {
+const mapDataToDOM = (todoItemsArray) => {
   const container = document.querySelector(`.${DOMClasses.dataContainer}`);
-  const sortedByStatusData = sortDataByStatus(response);
+  const sortedByStatusData = sortDataByStatus(todoItemsArray);
   const columnsFragment = createColumnsElementsFragment(sortedByStatusData);
   container.appendChild(columnsFragment);
 };

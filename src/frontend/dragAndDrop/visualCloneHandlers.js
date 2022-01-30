@@ -12,7 +12,7 @@ const visualCloneHandlers = {
     cloneContainer.removeChild(this._clonedNode);
   },
   updateClonePosition(moveEvent) {
-    this._clonedNode.style.transform = `translate(${moveEvent.clientX}px, ${moveEvent.clientY}px)`;
+    this._clonedNode.style.transform = `translate(${moveEvent.pageX}px, ${moveEvent.pageY}px)`;
   },
 };
 
