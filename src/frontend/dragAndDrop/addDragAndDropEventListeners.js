@@ -4,7 +4,7 @@ import { takeUntil, switchMap, withLatestFrom, bufferCount, map, sequenceEqual, 
 import visualCloneHandlers from './visualCloneHandlers';
 import { DOMClasses } from '../config';
 
-const hoveredClass = 'z-depth-5';
+const hoveredClass = DOMClasses.dataContainerColumnHighlighted;
 
 const addDragAndDropEventListeners = () => {
 
@@ -66,13 +66,13 @@ dragMouseUp$.subscribe(() => {
 // highlight potential droppable target on hover drag
 dragMoveOnDroppable$.subscribe((mouseMoveEvent) => {
   droppable.forEach(el => el.classList.remove(hoveredClass));
-  mouseMoveEvent.target.closest('.droppable').classList.add(hoveredClass);
+  mouseMoveEvent.target.closest(`.${DOMClasses.droppable}`).classList.add(hoveredClass);
 });
 // move draggable element to target droppable on drop
 dragDrop$.pipe(
   withLatestFrom(mouseDownOnDraggable$),
 ).subscribe(([dropToElement, draggedElement]) => {
-  dropToElement.target.closest('.droppable').appendChild(draggedElement.target)
+  dropToElement.target.closest(`.${DOMClasses.droppable}`).appendChild(draggedElement.target)
 });
 
 };

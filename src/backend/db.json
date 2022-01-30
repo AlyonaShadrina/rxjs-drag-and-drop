@@ -6,6 +6,7 @@
     { "id": 4, "title": "4 in_progress", "status": "in_progress" },
     { "id": 5, "title": "5 done", "status": "done" },
     { "id": 6, "title": "6 todo", "status": "todo" },
-    { "id": 7, "title": "7 todo", "status": "todo" }
+    { "id": 7, "title": "7 backlog", "status": "backlog" },
+    { "id": 8, "title": "8 test", "status": "test" }
   ]
 }

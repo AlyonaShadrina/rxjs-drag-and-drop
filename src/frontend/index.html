@@ -15,21 +15,22 @@
     width: 100vw;
     height: 100vh;
   }
+  .data-container {
+    white-space: nowrap;
+    height: 100%;
+  }
+  .data-container__column {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    height: 100%;
+    padding: .25rem;
+  }
 </style>
-<div class="row">
-  <!-- <div class="col s4 droppable">
-    <div class="card draggable">1.1</div>
-    <div class="card draggable">1.2</div>
-  </div>
-  <div class="col s4 droppable">
-    <div class="card draggable">2.1</div>
-    <div class="card draggable">2.2</div>
-  </div>
-  <div class="col s4 droppable">
-    <div class="card draggable">3.1</div>
-    <div class="card draggable">3.2</div>
-  </div> -->
-</div>
+
+<div class="data-container"></div>
 
 <div id="clone-container"></div>
 

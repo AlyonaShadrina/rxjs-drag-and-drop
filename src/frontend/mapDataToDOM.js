@@ -6,11 +6,11 @@ const sortDataByStatus = (array) => {
     return accumulator;
   }, {});
 }
-const createColumnElement = (columnTitle, columnCount) => {
+const createColumnElement = (columnTitle) => {
   const columnTitleElement = document.createElement('header');
   columnTitleElement.innerText = columnTitle;
   const result = document.createElement('section');
-  result.classList.add('col', DOMClasses.droppable);
+  result.classList.add(DOMClasses.dataContainerColumn, DOMClasses.droppable);
   result.appendChild(columnTitleElement);
   return result;
 };
@@ -29,7 +29,7 @@ const createTodoItemsElementsFragment = (todoItemsArray) => {
 const createColumnsElementsFragment = (sortedByStatusData) => {
   const statusesArray = Object.keys(sortedByStatusData);
   return statusesArray.reduce(((accumulator, status) => {
-    const columnElement = createColumnElement(status, statusesArray.length);
+    const columnElement = createColumnElement(status);
     const todoItemsFragment = createTodoItemsElementsFragment(sortedByStatusData[status]);
     columnElement.appendChild(todoItemsFragment);
     accumulator.appendChild(columnElement);
@@ -37,7 +37,7 @@ const createColumnsElementsFragment = (sortedByStatusData) => {
   }), document.createDocumentFragment())
 };
 const mapDataToDOM = (response) => {
-  const container = document.querySelector('.row');
+  const container = document.querySelector(`.${DOMClasses.dataContainer}`);
   const sortedByStatusData = sortDataByStatus(response);
   const columnsFragment = createColumnsElementsFragment(sortedByStatusData);
   container.appendChild(columnsFragment);
