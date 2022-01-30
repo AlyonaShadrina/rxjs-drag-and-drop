@@ -10,9 +10,14 @@
 <body>
 
 <style>
+  :root {
+    --colorPrimary: #8fd3f4;
+    --colorSecondary: #84fab0;
+  }
   body {
     width: 100vw;
     height: 100vh;
+    font-family: sans-serif;
   }
   .data-container {
     white-space: nowrap;
@@ -25,30 +30,37 @@
     margin-left: 0.25rem;
     margin-right: 0.25rem;
     height: 100%;
-    padding: .25rem;
+    padding: 1rem .25rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
   }
   .data-container__card {
-    border: 1px solid black;
     /* for correct work drop it needs to have margin*/
     margin: 0.5rem 0;
+    border: 1px solid var(--colorPrimary);
+    border-radius: 0.25rem;
+    padding: 0.5rem;
   }
-  .z-depth-5 {
-    background-color: red;
+  .data-container__column--highlight {
+    border-color: var(--colorSecondary);
+  }
+  .field {
+    font-size: .8rem;
+    border: 1px solid var(--colorPrimary);
+    padding: .25rem;
+  }
+  #clone-container {
+    opacity: .5;
   }
 </style>
 
 <div class="row">
-  <div class="input-field col s12 m3">
-    <select name="search-field" id="search-type" style="display: inline;">
+    <select name="search-field" id="search-type" class="field">
       <option value="title" selected>title</option>
       <option value="description">description</option>
       <option value="status">status</option>
     </select>
-  </div>
-  <div class="input-field col s12 m9">
-    <input type="text" name="search" id="search-input">
-    <label for="search-input">Search</label>
-  </div>
+    <input type="text" name="search" id="search-input" placeholder="Search" class="field">
 </div>
 
 <div class="data-container"></div>

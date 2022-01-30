@@ -3,5 +3,5 @@ export const DOMClasses = {
   droppable: 'droppable',
   dataContainer: 'data-container',
   dataContainerColumn: 'data-container__column',
-  dataContainerColumnHighlighted: 'z-depth-5',
+  dataContainerColumnHighlighted: 'data-container__column--highlight',
 };
