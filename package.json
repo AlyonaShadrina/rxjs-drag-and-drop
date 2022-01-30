@@ -2,9 +2,10 @@
   "name": "rxjs-cc",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "frontend/index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
+    "start-backend": "json-server --watch src/backend/db.json",
+    "start-frontend": "webpack-dev-server --mode development",
     "build": "webpack --mode production"
   },
   "keywords": [],

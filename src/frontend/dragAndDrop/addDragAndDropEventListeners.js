@@ -1,11 +1,15 @@
 import { fromEvent, merge, from } from 'rxjs';
 import { takeUntil, switchMap, withLatestFrom, bufferCount, map, sequenceEqual, mergeMap, filter } from 'rxjs/operators';
-import visualCloneHandlers from './clone';
+
+import visualCloneHandlers from './visualCloneHandlers';
+import { DOMClasses } from '../config';
 
 const hoveredClass = 'z-depth-5';
 
-const draggable = document.querySelectorAll('.draggable');
-const droppable = document.querySelectorAll('.droppable');
+const addDragAndDropEventListeners = () => {
+
+const draggable = document.querySelectorAll(`.${DOMClasses.draggable}`);
+const droppable = document.querySelectorAll(`.${DOMClasses.droppable}`);
 
 const mouseDownOnDraggable$ = fromEvent(draggable, 'mousedown');
 const mouseUpOnDocument$ = fromEvent(document, 'mouseup');
@@ -70,3 +74,7 @@ dragDrop$.pipe(
 ).subscribe(([dropToElement, draggedElement]) => {
   dropToElement.target.closest('.droppable').appendChild(draggedElement.target)
 });
+
+};
+
+export default addDragAndDropEventListeners;
